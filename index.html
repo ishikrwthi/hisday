@@ -1,0 +1,1287 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>A Little Something For You ❤️</title> <style> @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap');
+:root{
+--pink:#f6a9bd;
+--dark:#a83f65;
+--light:#fff5f7;
+--text:#65404d;
+}
+
+*{
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+margin:0;
+font-family:'Quicksand',sans-serif;
+background:#fff1f5;
+color:var(--text);
+min-height:100vh;
+}
+
+.page{
+display:none;
+min-height:100vh;
+padding:35px 18px;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+text-align:center;
+animation:fade .6s ease;
+}
+
+.page.active{
+display:flex;
+}
+
+@keyframes fade{
+from{
+opacity:0;
+transform:translateY(12px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+h1,h2{
+font-family:'Playfair Display',serif;
+color:#a83f65;
+}
+
+h1{
+font-size:clamp(2rem,7vw,3.3rem);
+}
+
+h2{
+font-size:clamp(1.6rem,5vw,2.3rem);
+}
+
+p{
+line-height:1.8;
+}
+
+.card{
+background:#fff;
+border:1px solid #f8d5df;
+border-radius:25px;
+padding:28px 22px;
+width:min(100%,620px);
+box-shadow:0 12px 35px #b85a7620;
+}
+
+button{
+border:0;
+border-radius:30px;
+padding:13px 24px;
+background:#c85d82;
+color:white;
+font-family:inherit;
+font-size:1rem;
+font-weight:700;
+cursor:pointer;
+margin:7px;
+transition:.2s;
+}
+
+button:hover{
+transform:translateY(-2px);
+background:#a83f65;
+}
+
+button.secondary{
+background:#f4d5df;
+color:#8d3e5b;
+}
+
+.small{
+font-size:.9rem;
+color:#986477;
+}
+
+.heart{
+font-size:3rem;
+animation:beat 1s infinite;
+}
+
+@keyframes beat{
+50%{
+transform:scale(1.18);
+}
+}
+
+.pill{
+display:inline-block;
+background:#fff0f4;
+border-radius:30px;
+padding:10px 16px;
+margin:5px;
+}
+
+/* Welcome */
+
+#welcome{
+background-color:#f9e8ef;
+background-image:
+linear-gradient(45deg,#f4d9e4 25%,transparent 25%),
+linear-gradient(-45deg,#f4d9e4 25%,transparent 25%),
+linear-gradient(45deg,transparent 75%,#f4d9e4 75%),
+linear-gradient(-45deg,transparent 75%,#f4d9e4 75%);
+background-size:34px 34px;
+background-position:
+0 0,
+0 17px,
+17px -17px,
+-17px 0;
+}
+
+.welcome-note{
+background:#fffaf8;
+border-radius:22px;
+padding:30px 22px;
+max-width:520px;
+box-shadow:0 12px 35px #91445b22;
+}
+
+.welcome-note .tiny{
+letter-spacing:2px;
+color:#b36b83;
+font-size:.8rem;
+}
+
+.envelope{
+width:170px;
+height:115px;
+background:#d77b9a;
+margin:22px auto;
+position:relative;
+border-radius:10px;
+box-shadow:0 10px 25px #9f456333;
+}
+
+.envelope:before{
+content:"";
+position:absolute;
+inset:0;
+background:#edabc0;
+clip-path:polygon(0 0,100% 0,50% 62%);
+border-radius:10px;
+}
+
+.envelope:after{
+content:"♥";
+position:absolute;
+top:48px;
+left:68px;
+font-size:35px;
+color:white;
+}
+
+/* Game */
+
+.game-grid{
+display:grid;
+grid-template-columns:repeat(3,minmax(0,1fr));
+gap:10px;
+width:min(100%,480px);
+margin:22px auto;
+}
+
+.game-card{
+min-width:0;
+min-height:105px;
+padding:12px 6px;
+border-radius:17px;
+background:linear-gradient(145deg,#f5c5d4,#fff0f4);
+border:2px solid white;
+box-shadow:0 5px 14px #9f45631a;
+color:#9d4564;
+font-weight:700;
+display:flex;
+align-items:center;
+justify-content:center;
+overflow-wrap:anywhere;
+word-break:normal;
+font-size:clamp(.76rem,2.7vw,1rem);
+cursor:pointer;
+user-select:none;
+transform:none !important;
+}
+
+.game-card.opened{
+background:#fff;
+border-color:#e8a4b9;
+cursor:default;
+}
+
+#game-complete-message{
+display:none;
+color:#a83f65;
+font-family:'Playfair Display',serif;
+font-size:1.3rem;
+font-weight:bold;
+margin:15px auto;
+}
+
+/* Promises */
+
+.promise-list{
+text-align:left;
+margin:20px auto;
+max-width:520px;
+}
+
+.promise{
+display:flex;
+align-items:flex-start;
+gap:12px;
+background:#fff7f9;
+border-radius:13px;
+padding:13px;
+margin:9px 0;
+line-height:1.5;
+}
+
+.promise input{
+accent-color:#bd5478;
+width:19px;
+height:19px;
+flex-shrink:0;
+margin-top:2px;
+}
+
+/* Reasons */
+
+.reason-list{
+max-height:55vh;
+overflow-y:auto;
+text-align:left;
+padding:5px 12px;
+}
+
+.reason{
+padding:12px 14px;
+background:#fff7f9;
+border-radius:12px;
+margin:8px 0;
+line-height:1.6;
+}
+
+/* Hold heart */
+
+.heart-holder{
+width:180px;
+height:180px;
+border-radius:50%;
+background:#ffe5ed;
+display:grid;
+place-items:center;
+margin:20px auto;
+touch-action:none;
+user-select:none;
+cursor:pointer;
+border:5px solid #f4bfd0;
+}
+
+.heart-holder span{
+font-size:75px;
+}
+
+.progress{
+height:12px;
+background:#f5dbe3;
+border-radius:20px;
+overflow:hidden;
+width:min(100%,300px);
+margin:15px auto;
+}
+
+.progress-fill{
+height:100%;
+width:0;
+background:#c85d82;
+transition:width .1s;
+}
+
+/* Letter */
+
+.letter{
+background:#fffaf1;
+border:1px solid #eed9c9;
+border-radius:8px;
+padding:30px 25px;
+text-align:left;
+max-width:580px;
+box-shadow:0 10px 30px #8d5b4520;
+line-height:1.9;
+}
+
+/* Final */
+
+#final{
+overflow:hidden;
+background:linear-gradient(#fff1f5,#ffe1eb);
+}
+
+.scene{
+position:relative;
+width:min(100%,500px);
+height:230px;
+overflow:hidden;
+margin:20px auto;
+}
+
+.silhouette{
+position:absolute;
+bottom:20px;
+width:85px;
+height:125px;
+transition:transform 3s ease;
+}
+
+.silhouette .head{
+position:absolute;
+width:48px;
+height:48px;
+border-radius:50%;
+top:0;
+left:18px;
+background:#593d48;
+}
+
+.silhouette .body{
+position:absolute;
+top:43px;
+left:8px;
+width:68px;
+height:82px;
+border-radius:35px 35px 12px 12px;
+background:#d77898;
+}
+
+.silhouette.girl{
+left:8%;
+transform:translateX(-150px);
+}
+
+.silhouette.boy{
+right:8%;
+transform:translateX(150px);
+}
+
+.silhouette.boy .head{
+background:#423943;
+}
+
+.silhouette.boy .body{
+background:#7895b7;
+}
+
+.silhouette.girl .body{
+background:#d77898;
+}
+
+.scene.meet .girl{
+transform:translateX(55px);
+}
+
+.scene.meet .boy{
+transform:translateX(-55px);
+}
+
+.final-heart{
+font-size:55px;
+opacity:0;
+transform:scale(.2);
+transition:all 1s ease;
+}
+
+.final-heart.show{
+opacity:1;
+transform:scale(1.2);
+}
+
+.final-message{
+opacity:0;
+transition:opacity 1.2s ease;
+}
+
+.final-message.show{
+opacity:1;
+}
+
+.floating-heart{
+position:fixed;
+bottom:-30px;
+color:#df7395;
+pointer-events:none;
+animation:floatUp 5s linear forwards;
+z-index:1000;
+}
+
+@keyframes floatUp{
+to{
+transform:translateY(-110vh) rotate(360deg);
+opacity:0;
+}
+}
+
+@media(max-width:390px){
+.game-card{
+min-height:92px;
+padding:8px 4px;
+}
+
+.card{
+padding:23px 15px;
+}
+
+.letter{
+padding:22px 17px;
+}
+}
+</style>
+
+</head> <body> <!-- WELCOME --> <section class="page active" id="welcome"> <div class="welcome-note">
+<div class="tiny">A LITTLE SOMETHING FROM ISHIKA</div>
+
+<div class="envelope"></div>
+
+<h1>Babesss ❤️</h1>
+
+<h2>Happy Boyfriend Day!</h2>
+
+<p>
+  This little corner of the internet is made just for you.
+  Ready for a tiny journey through my heart? 🥹
+</p>
+
+<button onclick="go('question')">
+  Come inside 💌
+</button>
+
+</div> </section> <!-- QUESTION --> <section class="page" id="question"> <div class="card">
+<div class="heart">❤️</div>
+
+<h1>Do you love me?</h1>
+
+<p>Think carefully before answering, mister! 🤭</p>
+
+<button onclick="go('excited')">
+  YES, obviously! ❤️
+</button>
+
+<button class="secondary" onclick="noClicked()">
+  NO 🙄
+</button>
+
+<p class="small" id="noMessage"></p>
+
+</div> </section> <!-- EXCITED --> <section class="page" id="excited"> <div class="card">
+<div class="heart">🥹💕</div>
+
+<h1>I knew it!</h1>
+
+<p>
+  You are stuck with me now, babesss.
+  No returns, no exchanges. 😌❤️
+</p>
+
+<button onclick="go('littleThings')">
+  Let's go 💗
+</button>
+
+</div> </section> <!-- LITTLE THINGS --> <section class="page" id="littleThings"> <div class="card">
+<h1>Our Little Things 💕</h1>
+
+<p>
+  It's the little moments with you that mean everything to me.
+</p>
+
+<div>
+  <span class="pill">Our Texts 💬</span>
+  <span class="pill">Movie Date 🎬</span>
+  <span class="pill">Metro Drive 🚇❤️</span>
+  <span class="pill">Cute Fights 🥺</span>
+  <span class="pill">Food Date 🍕🍔🍝🥟</span>
+  <span class="pill">Everything ❤️</span>
+</div>
+
+<p>
+  Every ordinary moment becomes special when it's with you.
+</p>
+
+<button onclick="go('game')">
+  Next 💌
+</button>
+
+</div> </section> <!-- GAME --> <section class="page" id="game"> <div class="card">
+<h1>Win My Heart ❤️</h1>
+
+<p>
+  Tap all 9 cards and discover what makes you special to me!
+</p>
+
+<div class="game-grid">
+
+  <div class="game-card"
+       data-message="Your smile ☺️"
+       onclick="openCard(this)">
+    Tap me 💗
+  </div>
+
+  <div class="game-card"
+       data-message="Your hugs 🫂"
+       onclick="openCard(this)">
+    Tap me 💗
+  </div>
+
+  <div class="game-card"
+       data-message="Your laugh 😂"
+       onclick="openCard(this)">
+    Tap me 💗
+  </div>
+
+  <div class="game-card"
+       data-message="Your eyes ✨"
+       onclick="openCard(this)">
+    Tap me 💗
+  </div>
+
+  <div class="game-card"
+       data-message="Your care 🤍"
+       onclick="openCard(this)">
+    Tap me 💗
+  </div>
+
+  <div class="game-card"
+       data-message="Your kisses 💋"
+       onclick="openCard(this)">
+    Tap me 💗
+  </div>
+
+  <div class="game-card"
+       data-message="Your pagalpan 😭"
+       onclick="openCard(this)">
+    Tap me 💗
+  </div>
+
+  <div class="game-card"
+       data-message="Your heart ❤️"
+       onclick="openCard(this)">
+    Tap me 💗
+  </div>
+
+  <div class="game-card"
+       data-message="YOU. Always. 🥹"
+       onclick="openCard(this)">
+    Tap me 💗
+  </div>
+
+</div>
+
+<div id="game-complete-message">
+  Aap toh pro ho hi dil jeetne mein 🥹❤️
+</div>
+
+<button id="gameNext"
+        style="display:none"
+        onclick="go('promises')">
+  Continue 💌
+</button>
+
+</div> </section> <!-- PROMISES --> <section class="page" id="promises"> <div class="card">
+<h1>Some Promises? 🥺</h1>
+
+<p>
+  Six little promises from you to me. Check them all!
+</p>
+
+<div class="promise-list">
+
+  <label class="promise">
+    <input type="checkbox">
+    Always communicate with me, even when things get difficult.
+  </label>
+
+  <label class="promise">
+    <input type="checkbox">
+    Never let a silly fight become bigger than our love.
+  </label>
+
+  <label class="promise">
+    <input type="checkbox">
+    Keep making time for our little moments.
+  </label>
+
+  <label class="promise">
+    <input type="checkbox">
+    Keep supporting each other's dreams.
+  </label>
+
+  <label class="promise">
+    <input type="checkbox">
+    Never stop choosing each other.
+  </label>
+
+  <label class="promise">
+    <input type="checkbox">
+    Give me unlimited hugs and kisses. 🤭
+  </label>
+
+</div>
+
+<p id="promiseError"
+   style="color:#b33d63;display:none">
+  Kuchu Puchu, promise aadhura chhod ke kaha ja rahe ho? 🥺
+</p>
+
+<button onclick="checkPromises()">
+  I promise ❤️
+</button>
+
+</div> </section> <!-- REASONS --> <section class="page" id="reasons"> <div class="card">
+<h1>100 Reasons Why I Love You ❤️</h1>
+
+<p>
+  And honestly, a hundred aren't even enough.
+</p>
+
+<div class="reason-list" id="reasonList"></div>
+
+<button onclick="go('holdHeart')">
+  Next ❤️
+</button>
+
+</div> </section> <!-- HOLD HEART --> <section class="page" id="holdHeart"> <div class="card">
+<h1>Hold My Heart ❤️</h1>
+
+<p>
+  Press and hold the heart until it fills completely.
+</p>
+
+<div class="heart-holder" id="heartHolder">
+  <span>❤️</span>
+</div>
+
+<div class="progress">
+  <div class="progress-fill" id="heartProgress"></div>
+</div>
+
+<p class="small" id="heartHint">
+  Don't let go! 🥺
+</p>
+
+<button id="heartNext"
+        style="display:none"
+        onclick="go('youAreMy')">
+  You did it 💗
+</button>
+
+</div> </section> <!-- YOU ARE MY --> <section class="page" id="youAreMy"> <div class="card">
+<h1>You Are My... 💗</h1>
+
+<div class="pill">Best Friend 🫶</div>
+<div class="pill">Favourite Human 🥹</div>
+<div class="pill">Biggest Support 🤍</div>
+<div class="pill">Safe Place 🏡</div>
+<div class="pill">My Happiness ☀️</div>
+<div class="pill">My Forever ♾️</div>
+
+<p>
+  You are all these things and so much more.
+</p>
+
+<button onclick="go('letter')">
+  One last thing 💌
+</button>
+
+</div> </section> <!-- LETTER --> <section class="page" id="letter"> <div class="letter">
+<h2>To My Babesss ❤️</h2>
+
+<p>My love,</p>
+
+<p>
+  Although today is your day, Happy Boyfriend's Day, my love! ❤️
+  But I hope you know that every day feels special because of you ~
+  Tum se hi din hota hai surmayi saans aati hai, Tum se hi 🫀♥️
+</p>
+
+<p>
+  I don't know how to explain how much you mean to me ❤️.
+  You have become such a beautiful part of my life 🥹.
+  Even the smallest things feel special when I share them with you 🫶🏻.
+</p>
+
+<p>
+  <b>
+    For me you are the Sun and when the sun comes out,
+    the stars disappear. 🌞🥹❤️
+  </b>
+</p>
+
+<p>
+  You are the sweetest, cutest, perfect, amazing and adorable
+  person in this whole world and never doubt yourself for that. 😌✨❤️
+</p>
+
+<p>
+  I know we aren't perfect. We have our silly fights,
+  our disagreements and our difficult days. But through everything,
+  I want us to keep choosing each other and I know we will 🫂💞.
+</p>
+
+<p>
+  You're such a beautiful person inside out and I feel so lucky
+  to have someone like you as my partner, my home, my safe place
+  and my everything 🥹❤️🧿🧿.
+</p>
+
+<p>
+  Truth is, You are my greatest blessing and biggest gift God has
+  ever given to me 🥺❤️. You understand and support me in every
+  single aspect of life 💝. You are my hero, my strength, my weakness,
+  my love, my best friend, my food partner, my crime partner, my peace
+  and, in easy words, You are my everything ❤️🌎.
+</p>
+
+<p>
+  You taught me so many things, especially how to be kind and loving,
+  not to give up. I was such an egoistic person until you came into
+  my life and made me a lover girl who loves you a lot and cares for
+  you more than anything. You matter to me so much that even the
+  smallest details of you have an effect on me 🥺❤️.
+</p>
+
+<p>
+  Thank you for being you, for making me smile, and for giving me
+  so many memories to cherish. I want countless more little moments,
+  silly conversations, hugs, kisses and adventures with you.
+  A special thanks for coming in my life and making it worthwhile. 🥹❤️
+</p>
+
+<p>
+  With all my love,<br>
+  <b>Your Ishika ❤️</b>
+</p>
+
+<div style="text-align:center">
+  <button onclick="go('kiss')">
+    A kiss for you 💋
+  </button>
+</div>
+
+</div> </section> <!-- KISS --> <section class="page" id="kiss"> <div class="card">
+<div class="heart">💋</div>
+
+<h1>Muahhh! 😘</h1>
+
+<p>
+  Sending you unlimited kisses and the biggest hug ever!
+</p>
+
+<div style="font-size:2rem">
+  💋 💗 🫂 💋 💗
+</div>
+
+<button onclick="go('final')">
+  One last surprise ❤️
+</button>
+
+</div> </section> <!-- FINAL --> <section class="page" id="final"> <h1>My Favourite Person ❤️</h1> <p>Two hearts, one little world.</p> <div class="scene" id="coupleScene">
+<div class="silhouette girl">
+  <div class="head"></div>
+  <div class="body"></div>
+</div>
+
+<div class="silhouette boy">
+  <div class="head"></div>
+  <div class="body"></div>
+</div>
+
+</div> <div class="final-heart" id="finalHeart"> ❤️ </div> <div class="final-message" id="finalMessage">
+<h1>You Complete Me</h1>
+
+<h2>I Love You ❤️</h2>
+
+<p>Today, tomorrow and always. ♾️</p>
+
+</div> <button onclick="restart()"> Start Again 💕 </button> </section> <script>
+/* =========================
+PAGE NAVIGATION
+========================= */
+
+function go(id){
+
+document.querySelectorAll('.page').forEach(function(page){
+page.classList.remove('active');
+});
+
+const target = document.getElementById(id);
+
+if(target){
+target.classList.add('active');
+}
+
+window.scrollTo({
+top:0,
+behavior:'smooth'
+});
+
+if(id === 'final'){
+startFinal();
+}
+}
+
+/* =========================
+NO BUTTON
+========================= */
+
+let noCount = 0;
+
+const noMessages = [
+"Excuse me?! Try again, babesss! 😭",
+"Wrong answer! I know you love me. 🥺",
+"That button is not working for you. ☺️",
+"Only YES is accepted here! ❤️"
+];
+
+function noClicked(){
+
+const message = document.getElementById('noMessage');
+
+message.textContent =
+noMessages[Math.min(noCount,noMessages.length - 1)];
+
+noCount++;
+}
+
+/* =========================
+LOVE GAME
+========================= */
+
+let openedCards = 0;
+
+function openCard(card){
+
+if(card.classList.contains('opened')){
+return;
+}
+
+card.classList.add('opened');
+
+card.textContent = card.dataset.message;
+
+openedCards++;
+
+if(openedCards === 9){
+
+document.getElementById(
+  'game-complete-message'
+).style.display = 'block';
+
+document.getElementById(
+  'gameNext'
+).style.display = 'inline-block';
+
+}
+}
+
+/* =========================
+PROMISES
+========================= */
+
+function checkPromises(){
+
+const checks =
+document.querySelectorAll('.promise input');
+
+const allChecked =
+Array.from(checks).every(function(check){
+return check.checked;
+});
+
+if(allChecked){
+
+document.getElementById(
+  'promiseError'
+).style.display = 'none';
+
+go('reasons');
+
+}else{
+
+document.getElementById(
+  'promiseError'
+).style.display = 'block';
+
+}
+}
+
+/* =========================
+100 REASONS
+========================= */
+
+const reasons = [
+
+"You are my most favourite person. 🫦",
+"You brighten my day. ☀️",
+"You always know how to make me laugh. ❤️",
+"You are adorable. 🧿",
+"You listen to me. 👂",
+"You support my dreams. 🌹",
+"You have the most beautiful eyes. 👀",
+"You make me feel safe. 🩷",
+"Your hugs are the best. 🫂",
+"You are incredible. 💚",
+"You bring out the best in me. 🫶🏻",
+"You're my best friend. ❤️",
+"You accept me as I am. 💕",
+"You are my World. 🌎",
+"The way you care for me and others. ☺️",
+"You are my cute little Baby. 🧸",
+"You make even the ordinary moments special. 🥹",
+"Your sense of humor. 🙂‍↔️",
+"The way you look at me. 🫠",
+"You are so patient. 💖",
+"You never give up on us. 🫂",
+"You are my biggest cheerleader. 🥳",
+"You're dhoor-ly intelligent. 😵‍💫",
+"You're a great person. ✨",
+"You're my confidant. 💜",
+"You surprise me in the best ways. 🤩",
+"You're always up for trying things. 😌",
+"You courage me. 💛",
+"You're incredibly hardworking. ❤️‍🔥",
+"Your loyalty. 💝",
+"You make me feel appreciated. 💞",
+"Your laugh is injurious to my health. 💘",
+"You make me a better person. 👻",
+"You are my Favourite animal. 🐣",
+"You're always there when I need you. 🤌",
+"You made us lucky. 🍀",
+"The way you hold my hand. 🤝",
+"You're an amazing partner. 🫰",
+"Your generosity. 💙",
+"You respect me. 🧡",
+"You're honest with me. 🤍",
+"You're my rock. 💪",
+"You make me feel cherished. 💛",
+"Your kisses are magical. 💋",
+"You're my gem. 💎",
+"Your resilience. 🩶",
+"You're my partner in crime. 😼",
+"Your strength. 💗",
+"You make me feel alive. ❤️‍🩹",
+"Your dedication to our relationship. 👩‍❤️‍👨",
+"You match my chatorapan. 😋",
+"Your warm heart. 🌻",
+"You are my king. 🫅",
+"Your sense of style. 😎",
+"You're my soulmate. 💓",
+"You’re my home. 🏡",
+"You always have the bad ideas. 🤭",
+"You're my inspiration. 🌸",
+"Your selflessness. 🥰",
+"You understand me. 💐",
+"You make me feel special. 👫",
+"Your positive attitude. ☺️",
+"You're so caring. 🤎",
+"You're my comfort. ❤️",
+"You’re my universe. 💫",
+"You're my partner in everything. 🫶🏻",
+"You’re my star. 🌟",
+"You're my safe haven. 😘",
+"You’re my heart. 🫀",
+"You make me feel loved. 🥹",
+"Your stupid little jokes. 😵‍💫",
+"You always make time for me. 🫡",
+"You're my favorite person to talk to. 🗣️",
+"You make me feel important. 🥺",
+"You filled my life with colours. 🎨",
+"You're my best friend and lover. ❤️",
+"You're my constant support. 🫂",
+"You’re tharki. 😩",
+"You make me feel crazy. 🥴",
+"You're my perfect match. 🫁",
+"Your patience with me. 🤪",
+"You're my biggest fan. 💁‍♀️",
+"You’re magical. 🪄",
+"Your loving nature. ❣️",
+"You make life fun. 😚",
+"You're always there for me. ♥️",
+"You’re the best gift of my life. 🎁",
+"You make my heart skip a beat. 🫀",
+"You're my everything. 🌍",
+"Your encouragement. 🤗",
+"You're my greatest adventure. 😉",
+"You’re my pookie princess. 🎀",
+"Your tenderness. 🤗",
+"You’re tastiest food. 🤤",
+"You’re cutest sweetest baby. 😍",
+"You're my forever. 🫶🏻",
+"You’re my biggest blessing. 🪬",
+"You're my moon. 🌕",
+"You make me feel complete. 💏",
+"Your love is my strength. 👥",
+"You boil my blood like no one else. 🤯",
+"You’re hottest, sexiest babess. 🥵",
+"You're my one and only true love. ❤️",
+"And millions more. 😩😩❤️❤️🧿"
+
+];
+
+/* Generate reasons */
+
+const reasonList =
+document.getElementById('reasonList');
+
+reasons.forEach(function(reason,index){
+
+const div =
+document.createElement('div');
+
+div.className = 'reason';
+
+div.textContent =
+(index + 1) + ". " + reason;
+
+reasonList.appendChild(div);
+});
+
+/* =========================
+HOLD HEART
+========================= */
+
+let holdTimer = null;
+let holdProgress = 0;
+let holding = false;
+
+const holder =
+document.getElementById('heartHolder');
+
+const progressBar =
+document.getElementById('heartProgress');
+
+const heartHint =
+document.getElementById('heartHint');
+
+function beginHold(event){
+
+if(holdProgress >= 100){
+return;
+}
+
+event.preventDefault();
+
+holding = true;
+
+clearInterval(holdTimer);
+
+holdTimer = setInterval(function(){
+
+if(!holding){
+  return;
+}
+
+holdProgress =
+  Math.min(100,holdProgress + 2);
+
+progressBar.style.width =
+  holdProgress + '%';
+
+if(holdProgress >= 100){
+
+  clearInterval(holdTimer);
+
+  heartHint.textContent =
+    "You filled my heart! 🥹❤️";
+
+  document.getElementById(
+    'heartNext'
+  ).style.display = 'inline-block';
+}
+
+},50);
+}
+
+function endHold(){
+
+holding = false;
+
+clearInterval(holdTimer);
+
+}
+
+holder.addEventListener(
+'pointerdown',
+beginHold
+);
+
+holder.addEventListener(
+'pointerup',
+endHold
+);
+
+holder.addEventListener(
+'pointerleave',
+endHold
+);
+
+holder.addEventListener(
+'pointercancel',
+endHold
+);
+
+/* =========================
+FINAL ANIMATION
+========================= */
+
+let finalStarted = false;
+let floatingTimer = null;
+
+function startFinal(){
+
+if(finalStarted){
+return;
+}
+
+finalStarted = true;
+
+const scene =
+document.getElementById('coupleScene');
+
+setTimeout(function(){
+scene.classList.add('meet');
+},400);
+
+setTimeout(function(){
+document.getElementById(
+'finalHeart'
+).classList.add('show');
+},3500);
+
+setTimeout(function(){
+document.getElementById(
+'finalMessage'
+).classList.add('show');
+},4600);
+
+floatingTimer = setInterval(function(){
+
+const finalPage =
+  document.getElementById('final');
+
+if(!finalPage.classList.contains('active')){
+  return;
+}
+
+const heart =
+  document.createElement('div');
+
+heart.className =
+  'floating-heart';
+
+const hearts = [
+  '❤️',
+  '💕',
+  '💗',
+  '💖'
+];
+
+heart.textContent =
+  hearts[Math.floor(Math.random() * hearts.length)];
+
+heart.style.left =
+  Math.random() * 100 + 'vw';
+
+heart.style.fontSize =
+  (16 + Math.random() * 22) + 'px';
+
+document.body.appendChild(heart);
+
+setTimeout(function(){
+  heart.remove();
+},5000);
+
+},650);
+}
+
+/* =========================
+RESTART
+========================= */
+
+function restart(){
+
+finalStarted = false;
+
+clearInterval(floatingTimer);
+
+openedCards = 0;
+
+document.querySelectorAll('.game-card')
+.forEach(function(card){
+
+  card.classList.remove('opened');
+
+  card.textContent = 'Tap me 💗';
+
+});
+
+document.getElementById(
+'game-complete-message'
+).style.display = 'none';
+
+document.getElementById(
+'gameNext'
+).style.display = 'none';
+
+document.querySelectorAll(
+'.promise input'
+).forEach(function(check){
+
+check.checked = false;
+
+});
+
+document.getElementById(
+'promiseError'
+).style.display = 'none';
+
+holdProgress = 0;
+
+progressBar.style.width = '0%';
+
+document.getElementById(
+'heartNext'
+).style.display = 'none';
+
+heartHint.textContent =
+"Don't let go! 🥺";
+
+document.getElementById(
+'coupleScene'
+).classList.remove('meet');
+
+document.getElementById(
+'finalHeart'
+).classList.remove('show');
+
+document.getElementById(
+'finalMessage'
+).classList.remove('show');
+
+noCount = 0;
+
+document.getElementById(
+'noMessage'
+).textContent = '';
+
+go('welcome');
+}
+
+</script> </body> </html>
